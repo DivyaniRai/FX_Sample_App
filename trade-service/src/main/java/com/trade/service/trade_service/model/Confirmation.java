@@ -1,7 +1,16 @@
 package com.trade.service.trade_service.model;
 
-import jakarta.persistence.*;
 import java.time.OffsetDateTime;
+
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "confirmations")
@@ -17,6 +26,10 @@ public class Confirmation {
     private String confirmationText;
 
     private OffsetDateTime createdAt;
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] pdfContent;
 
     public Long getId() {
         return id;
@@ -48,5 +61,13 @@ public class Confirmation {
 
     public void setCreatedAt(OffsetDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public byte[] getPdfContent() {
+        return pdfContent;
+    }
+
+    public void setPdfContent(byte[] pdfContent) {
+        this.pdfContent = pdfContent;
     }
 }

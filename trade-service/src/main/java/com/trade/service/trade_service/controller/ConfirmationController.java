@@ -1,10 +1,16 @@
 package com.trade.service.trade_service.controller;
 
-import com.trade.service.trade_service.model.Confirmation;
-import com.trade.service.trade_service.service.ConfirmationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.trade.service.trade_service.model.Confirmation;
+import com.trade.service.trade_service.service.ConfirmationService;
 
 @RestController
 @RequestMapping("/api/confirmations")
@@ -20,6 +26,16 @@ public class ConfirmationController {
     public ResponseEntity<Confirmation> generate(@RequestParam Long tradeId) {
         Confirmation c = confirmationService.generateForTrade(tradeId);
         return ResponseEntity.status(HttpStatus.CREATED).body(c);
+    }
+
+    @GetMapping(path = "/{id}/pdf", produces = "application/pdf")
+    public ResponseEntity<byte[]> getPdf(@PathVariable Long id) {
+        Confirmation c = confirmationService.getById(id);
+        byte[] pdf = c.getPdfContent();
+        if (pdf == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=confirmation-" + id + ".pdf")
+                .body(pdf);
     }
 
     @GetMapping("/{id}")
