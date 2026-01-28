@@ -30,6 +30,8 @@ public class Trade {
 
     private String customerId;
 
+    private String counterparty;
+
     @Enumerated(EnumType.STRING)
     private TradeStatus status;
 
@@ -113,6 +115,14 @@ public class Trade {
 
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
+    }
+
+    public String getCounterparty() {
+        return counterparty;
+    }
+
+    public void setCounterparty(String counterparty) {
+        this.counterparty = counterparty;
     }
 
     public TradeStatus getStatus() {

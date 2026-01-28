@@ -7,11 +7,12 @@ export default function ForwardForm(){
   const [amount,setAmount]=useState('1000');
   const [rate,setRate]=useState('83.5');
   const [tenor,setTenor]=useState('1M');
+  const [counterparty,setCounterparty]=useState('citi');
   const [msg,setMsg]=useState('');
 
   const submit = async ()=>{
     try{
-      const body = {buyCurrency,sellCurrency,sellAmount: parseFloat(amount), rate: parseFloat(rate), customerId:'CUST1', tenor};
+      const body = {buyCurrency,sellCurrency,sellAmount: parseFloat(amount), rate: parseFloat(rate), customerId:'CUST1', tenor, counterparty};
       const resp = await axios.post('/api/trades/forward', body, {headers:{'X-API-KEY':'test-key'}});
       setMsg('Created trade id ' + resp.data.id);
     }catch(e:any){ setMsg('Error: '+ (e.response?.data?.message || e.message)); }
@@ -19,19 +20,29 @@ export default function ForwardForm(){
 
   return (<div>
     <h3>Forward Trade</h3>
-    <div>
+    <div style={{display:'flex', gap:'8px', alignItems:'center'}}>
       <label>Buy</label>
       <input value={buyCurrency} onChange={e=>setBuyCurrency(e.target.value)} />
       <label>Sell</label>
       <input value={sellCurrency} onChange={e=>setSellCurrency(e.target.value)} />
     </div>
-    <div>
+    <div style={{display:'flex', gap:'8px', alignItems:'center'}}>
       <label>Amount</label>
       <input value={amount} onChange={e=>setAmount(e.target.value)} />
       <label>Rate</label>
       <input value={rate} onChange={e=>setRate(e.target.value)} />
+    </div>
+    <div style={{textAlign:'left', margin:'8px 0'}}>
       <label>Tenor</label>
       <input value={tenor} onChange={e=>setTenor(e.target.value)} />
+    </div>
+    <div style={{textAlign:'left', margin:'8px 0'}}>
+      <label>Counterparty</label>
+      <select value={counterparty} onChange={e=>setCounterparty(e.target.value)}>
+        <option value="citi">Citi</option>
+        <option value="scb">SCB</option>
+        <option value="hdfc">HDFC</option>
+      </select>
     </div>
     <button onClick={submit}>Submit Forward</button>
     <div>{msg}</div>

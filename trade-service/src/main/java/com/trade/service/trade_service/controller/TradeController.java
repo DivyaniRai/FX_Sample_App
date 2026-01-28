@@ -46,11 +46,12 @@ public class TradeController {
 
     @GetMapping
     public ResponseEntity<List<Trade>> list(@RequestParam(required = false) String customerId,
+                                            @RequestParam(required = false) String counterparty,
                                             @RequestParam(required = false) TradeType tradeType,
                                             @RequestParam(required = false) TradeStatus status,
                                             @RequestParam(required = false) LocalDate tradeDateFrom,
                                             @RequestParam(required = false) LocalDate tradeDateTo) {
-        List<Trade> list = tradeService.list(customerId, tradeType, status, tradeDateFrom, tradeDateTo);
+        List<Trade> list = tradeService.list(customerId, counterparty, tradeType, status, tradeDateFrom, tradeDateTo);
         return ResponseEntity.ok(list);
     }
 

@@ -27,6 +27,9 @@ public class TradeRequest {
     @NotBlank
     private String customerId;
 
+    @NotBlank
+    private String counterparty;
+
     private LocalDate tradeDate;
 
     private LocalDate valueDate; // optional for forwards
@@ -79,6 +82,14 @@ public class TradeRequest {
 
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
+    }
+
+    public String getCounterparty() {
+        return counterparty;
+    }
+
+    public void setCounterparty(String counterparty) {
+        this.counterparty = counterparty;
     }
 
     public LocalDate getTradeDate() {

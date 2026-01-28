@@ -46,6 +46,7 @@ public class TradeServiceImpl implements TradeService {
         t.setSellCurrency(req.getSellCurrency());
         t.setRate(req.getRate());
         t.setCustomerId(req.getCustomerId());
+        t.setCounterparty(req.getCounterparty());
         t.setTradeDate(req.getTradeDate() == null ? LocalDate.now() : req.getTradeDate());
         t.setValueDate(t.getTradeDate().plusDays(2));
         if (req.getBuyAmount() != null) {
@@ -69,6 +70,7 @@ public class TradeServiceImpl implements TradeService {
         t.setSellCurrency(req.getSellCurrency());
         t.setRate(req.getRate());
         t.setCustomerId(req.getCustomerId());
+        t.setCounterparty(req.getCounterparty());
         t.setTradeDate(req.getTradeDate() == null ? LocalDate.now() : req.getTradeDate());
         if (req.getValueDate() != null) {
             t.setValueDate(req.getValueDate());
@@ -103,8 +105,8 @@ public class TradeServiceImpl implements TradeService {
     }
 
     @Override
-    public List<Trade> list(String customerId, TradeType type, TradeStatus status, LocalDate from, LocalDate to) {
-        return tradeRepository.filter(customerId, type, status, from, to);
+    public List<Trade> list(String customerId, String counterparty, TradeType type, TradeStatus status, LocalDate from, LocalDate to) {
+        return tradeRepository.filter(customerId, counterparty, type, status, from, to);
     }
 
     @Override

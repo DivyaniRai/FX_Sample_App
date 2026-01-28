@@ -13,7 +13,7 @@ public interface TradeService {
     Trade createSpot(TradeRequest req);
     Trade createForward(TradeRequest req);
     Optional<Trade> getById(Long id);
-    List<Trade> list(String customerId, TradeType type, TradeStatus status, LocalDate from, LocalDate to);
+    List<Trade> list(String customerId, String counterparty, TradeType type, TradeStatus status, LocalDate from, LocalDate to);
     Trade update(Long id, TradeRequest req);
     Trade confirm(Long id, String user);
     Trade cancel(Long id, String user);

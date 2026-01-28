@@ -4,6 +4,7 @@ import axios from 'axios';
 export default function Blotter(){
   const [trades,setTrades]=useState<any[]>([]);
   const [customerId,setCustomerId]=useState<string>('');
+  const [counterparty,setCounterparty]=useState<string>('');
   const [customers,setCustomers]=useState<any[]>([]);
   const [tradeType,setTradeType]=useState<string>('');
   const [status,setStatus]=useState<string>('');
@@ -16,6 +17,7 @@ export default function Blotter(){
   const buildParams = ()=>{
     const p:any = {};
     if(customerId) p.customerId = customerId;
+    if(counterparty) p.counterparty = counterparty;
     if(tradeType) p.tradeType = tradeType;
     if(status) p.status = status;
     if(tradeDateFrom) p.tradeDateFrom = tradeDateFrom;
@@ -44,7 +46,7 @@ export default function Blotter(){
   useEffect(()=>{ load(); fetchCustomers(); },[]);
 
   const clearFilters = ()=>{
-    setCustomerId(''); setTradeType(''); setStatus(''); setTradeDateFrom(''); setTradeDateTo('');
+    setCustomerId(''); setCounterparty(''); setTradeType(''); setStatus(''); setTradeDateFrom(''); setTradeDateTo('');
     load();
   }
 
@@ -98,6 +100,8 @@ export default function Blotter(){
         {customers.map(c=> (<option key={c.id} value={c.id}>{c.id}{c.name? ' - ' + c.name: ''}</option>))}
       </select>
 
+      <input type="text" placeholder="Counterparty" value={counterparty} onChange={e=>setCounterparty(e.target.value)} />
+
       <select value={tradeType} onChange={e=>setTradeType(e.target.value)}>
         <option value="">All Types</option>
         <option value="SPOT">SPOT</option>
@@ -125,7 +129,7 @@ export default function Blotter(){
     <table border={1} style={{width:'100%', marginTop:8,borderCollapse:'collapse'}}>
       <thead>
         <tr style={{background:'#eee'}}>
-          <th>ID</th><th>Customer</th><th>Type</th><th>Buy/Sell</th><th>Amounts</th><th>Trade Date</th><th>Status</th><th>Actions</th>
+          <th>ID</th><th>Customer</th><th>Counterparty</th><th>Type</th><th>Buy/Sell</th><th>Amounts</th><th>Trade Date</th><th>Status</th><th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -134,6 +138,7 @@ export default function Blotter(){
           return (<tr key={t.id} onClick={()=>setSelectedId(t.id)} style={{background:isSelected? '#def':'transparent', cursor:'pointer'}}>
             <td style={{padding:6}}>{t.id}</td>
             <td>{t.customerId}</td>
+            <td>{t.counterparty}</td>
             <td>{t.tradeType}</td>
             <td>{t.buyCurrency}/{t.sellCurrency}</td>
             <td>{t.buyAmount}/{t.sellAmount}</td>

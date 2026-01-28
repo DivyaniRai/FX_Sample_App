@@ -15,8 +15,9 @@ public interface TradeRepository extends JpaRepository<Trade, Long> {
     List<Trade> findByTradeType(TradeType tradeType);
     List<Trade> findByStatus(TradeStatus status);
 
-    @Query("select t from Trade t where (:customerId is null or t.customerId = :customerId) and (:type is null or t.tradeType = :type) and (:status is null or t.status = :status) and (:from is null or t.tradeDate >= :from) and (:to is null or t.tradeDate <= :to)")
+    @Query("select t from Trade t where (:customerId is null or t.customerId = :customerId) and (:counterparty is null or t.counterparty = :counterparty) and (:type is null or t.tradeType = :type) and (:status is null or t.status = :status) and (:from is null or t.tradeDate >= :from) and (:to is null or t.tradeDate <= :to)")
     List<Trade> filter(@Param("customerId") String customerId,
+                       @Param("counterparty") String counterparty,
                        @Param("type") TradeType type,
                        @Param("status") TradeStatus status,
                        @Param("from") LocalDate from,

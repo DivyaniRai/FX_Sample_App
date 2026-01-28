@@ -32,8 +32,8 @@ public class ConfirmationServiceImpl implements ConfirmationService {
         Trade t = tradeRepository.findById(tradeId).orElseThrow(() -> new NoSuchElementException("Trade not found"));
         Confirmation c = new Confirmation();
         c.setTradeId(tradeId);
-        String text = String.format("Confirmation for trade %d: %s %s/%s buy %s sell %s rate %s valueDate %s",
-                t.getId(), t.getTradeType(), t.getBuyCurrency(), t.getSellCurrency(), t.getBuyAmount(), t.getSellAmount(), t.getRate(), t.getValueDate());
+        String text = String.format("Confirmation for trade %d: %s %s/%s buy %s sell %s rate %s valueDate %s counterparty %s",
+                t.getId(), t.getTradeType(), t.getBuyCurrency(), t.getSellCurrency(), t.getBuyAmount(), t.getSellAmount(), t.getRate(), t.getValueDate(), t.getCounterparty());
         c.setConfirmationText(text);
         c.setCreatedAt(OffsetDateTime.now());
         Confirmation saved = confirmationRepository.save(c);

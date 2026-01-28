@@ -16,6 +16,7 @@ public class TradeResponse {
     private LocalDate tradeDate;
     private LocalDate valueDate;
     private String customerId;
+    private String counterparty;
     private TradeStatus status;
 
     public Long getId() {
@@ -96,6 +97,14 @@ public class TradeResponse {
 
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
+    }
+
+    public String getCounterparty() {
+        return counterparty;
+    }
+
+    public void setCounterparty(String counterparty) {
+        this.counterparty = counterparty;
     }
 
     public TradeStatus getStatus() {
